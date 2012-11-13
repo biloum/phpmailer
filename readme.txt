@@ -12,7 +12,7 @@ This plugin provides a complete set of parameters including:
 1. Should this plugin override the default Elgg mail handler
 2. Should this plugin use smtp to send mail rather than php's mail function
 3. Should this plugin use authetication for smtp (username and password)
-4. Should this plugin use a SSL connection for smtp
+4. Should this plugin use a TLS/SSL connection for smtp
 5. Is your Mail Transfer Agent non-standard in its line endings
 
 

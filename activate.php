@@ -13,7 +13,7 @@ if ($plugin) {
 		'phpmailer_smtp_auth' => 0,
 		'phpmailer_username' => '',
 		'phpmailer_password' => '',
-		'ep_phpmailer_ssl' => 0,
+		'ep_phpmailer_secure' => '',
 		'ep_phpmailer_port' => 465,
 		'nonstd_mta' => 0,
 	);

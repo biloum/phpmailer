@@ -62,24 +62,25 @@ echo elgg_view('input/password', array(
 ));
 echo '</div>';
 
- // ssl connection for smtp (with port info)
+ // secure connection for smtp (with port info)
 echo '<div>';
-$checked = $vars['entity']->ep_phpmailer_ssl ? 'checked' : false;
-echo elgg_view('input/checkbox', array(
-	'name' => 'params[ep_phpmailer_ssl]',
-	'value' => 1,
-	'checked' => $checked,
-	'default' => 0,
-	'class' => 'phpmailer-smtp',
-	'id' => 'phpmailer-ssl',
+echo elgg_echo('phpmailer:secure') . ': ';
+echo elgg_view('input/dropdown', array(
+	'name' => 'params[ep_phpmailer_secure]',
+	'value' => $vars['entity']->ep_phpmailer_secure,
+	'options' => array('0' => '', '1' => 'tls', '2' => 'ssl'),
+	'default' => '',
+	'class' => 'phpmailer-smtp phpmailer-secure',
+	'id' => 'phpmailer-secure',
 ));
-echo ' ' . elgg_echo('phpmailer:ssl') . '<br/>';
+echo '<br/>';
 
 echo elgg_echo('phpmailer:port') . ':';
 echo elgg_view('input/text', array(
 	'name' => 'params[ep_phpmailer_port]',
 	'value' => $vars['entity']->ep_phpmailer_port,
-	'class' => 'phpmailer-smtp phpmailer-ssl elgg-input-natural',
+	'class' => 'phpmailer-smtp phpmailer-port elgg-input-natural',
+	'id' => 'phpmailer-port',
 ));
 echo '</div>';
 echo '</fieldset>';
@@ -104,12 +105,13 @@ echo '</div>';
 
 		$('#phpmailer-smtp').change(phpmailer_form_update);
 		$('#phpmailer-smtp-auth').change(phpmailer_form_update);
-		$('#phpmailer-ssl').change(phpmailer_form_update);
+		$('#phpmailer-secure').change(phpmailer_form_update);
 	});
 
 	function phpmailer_form_update() {
-		if ($('#phpmailer-ssl').attr('checked')) {
-			$('.phpmailer-ssl').removeAttr('disabled');
+		secure = ($('#phpmailer-secure :selected').text());
+		if (secure != '') {
+			$('.phpmailer-port').removeAttr('disabled');
 		}
 		if ($('#phpmailer-smtp-auth').attr('checked')) {
 			$('.phpmailer-smtp-auth').removeAttr('disabled');
@@ -124,8 +126,8 @@ echo '</div>';
 		if (!$('#phpmailer-smtp-auth').attr('checked')) {
 			$('.phpmailer-smtp-auth').attr('disabled', 'disabled');
 		}
-		if (!$('#phpmailer-ssl').attr('checked')) {
-			$('.phpmailer-ssl').attr('disabled', 'disabled');
+		if (secure == '') {
+			$('.phpmailer-port').attr('disabled', 'disabled');
 		}
 	}
 </script>

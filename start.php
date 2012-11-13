@@ -200,10 +200,10 @@ function phpmailer_send($from, $from_name, $to, $to_name, $subject, $body, array
 	$smtp_host = elgg_get_plugin_setting('phpmailer_host', 'phpmailer');
 	$smtp_auth = elgg_get_plugin_setting('phpmailer_smtp_auth', 'phpmailer');
 
-	$is_ssl    = elgg_get_plugin_setting('ep_phpmailer_ssl', 'phpmailer');
-	$ssl_port  = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer');
+	$secure = elgg_get_plugin_setting('ep_phpmailer_secure', 'phpmailer');
+	$port   = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer');
 
-	if ($is_smtp && isset($smtp_host)) {
+	if (($secure != '') && isset($smtp_host)) {
 		$phpmailer->IsSMTP();
 		$phpmailer->Host = $smtp_host;
 		$phpmailer->SMTPAuth = false;
@@ -212,9 +212,9 @@ function phpmailer_send($from, $from_name, $to, $to_name, $subject, $body, array
 			$phpmailer->Username = elgg_get_plugin_setting('phpmailer_username', 'phpmailer');
 			$phpmailer->Password = elgg_get_plugin_setting('phpmailer_password', 'phpmailer');
 
-			if ($is_ssl) {
-				$phpmailer->SMTPSecure = "ssl";
-				$phpmailer->Port = $ssl_port;
+			if ($secure != '') {
+				$phpmailer->SMTPSecure = $secure;
+				$phpmailer->Port       = $port;
 			}
 		}
 	}
